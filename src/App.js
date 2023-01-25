@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Main from "./components/Main";
+import { useEffect } from "react";
+import AddContact from "./components/AddContact";
+import EditContact from "./components/EditContact";
 function App() {
+  useEffect(() => {
+    let arr = [
+      {
+        name: "Ajay V S",
+        email: "jayvsajay@gmail.com",
+        phone: "8310825075",
+      },
+      {
+        name: "Akash PL",
+        email: "plakash123@gmail.com",
+        phone: "8090125075",
+      },
+    ];
+    localStorage.setItem("contact", JSON.stringify(arr));
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/add" element={<AddContact />} />
+          <Route path="/edit/:emailId" element={<EditContact />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
